@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neurological Health Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+        }
+        .section {
+            background-color: #fff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input, select, button {
+            padding: 10px;
+            margin-bottom: 15px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Neurological Health Tracker</h1>
+    </header>
+
+    <div class="container">
+
+        <!-- Mood and Emotion Tracker -->
+        <div class="section">
+            <h2>Mood and Emotion Tracker</h2>
+            <label for="mood">How are you feeling today?</label>
+            <select id="mood">
+                <option value="happy">Happy</option>
+                <option value="sad">Sad</option>
+                <option value="angry">Angry</option>
+                <option value="anxious">Anxious</option>
+                <option value="neutral">Neutral</option>
+            </select>
+            <button onclick="trackMood()">Track Mood</button>
+            <p id="moodResult"></p>
+        </div>
+
+        <!-- Sleep Patterns -->
+        <div class="section">
+            <h2>Sleep Patterns</h2>
+            <label for="sleepDuration">How many hours did you sleep last night?</label>
+            <input type="number" id="sleepDuration" placeholder="Enter hours of sleep">
+            <button onclick="trackSleep()">Track Sleep</button>
+            <p id="sleepResult"></p>
+        </div>
+
+        <!-- Memory Test -->
+        <div class="section">
+            <h2>Memory Test</h2>
+            <button onclick="startMemoryTest()">Start Memory Test</button>
+            <p id="memoryTestResult"></p>
+        </div>
+
+        <!-- Treatment Solutions -->
+        <div class="section">
+            <h2>Treatment Solutions</h2>
+            <label for="treatment">Select a condition:</label>
+            <select id="treatment">
+                <option value="amnesia">Amnesia</option>
+                <option value="migraine">Migraine</option>
+                <option value="sinusitis">Sinusitis</option>
+                <option value="nausea">Nausea</option>
+                <option value="chronicHeadache">Chronic Headache</option>
+            </select>
+            <button onclick="showTreatment()">Show Treatment</button>
+            <p id="treatmentResult"></p>
+        </div>
+
+        <!-- Diet Plans -->
+        <div class="section">
+            <h2>Diet Plans</h2>
+            <button onclick="showDietPlan()">Show Diet Plan</button>
+            <p id="dietPlanResult"></p>
+        </div>
+
+        <!-- Medication Reminder -->
+        <div class="section">
+            <h2>Medication Reminder</h2>
+            <label for="medication">Enter Medication Name:</label>
+            <input type="text" id="medication" placeholder="Medication Name">
+            <label for="medicationTime">Enter Time to Take:</label>
+            <input type="time" id="medicationTime">
+            <button onclick="setMedicationReminder()">Set Reminder</button>
+            <p id="reminderResult"></p>
+        </div>
+
+    </div>
+
+    <script>
+        // Mood Tracker Function
+        function trackMood() {
+            const mood = document.getElementById("mood").value;
+            document.getElementById("moodResult").innerText = "You are feeling " + mood + " today.";
+        }
+
+        // Sleep Tracker Function
+        function trackSleep() {
+            const sleepDuration = document.getElementById("sleepDuration").value;
+            document.getElementById("sleepResult").innerText = "You slept for " + sleepDuration + " hours last night.";
+        }
+
+        // Memory Test Function
+        function startMemoryTest() {
+            let score = Math.random() * 100;
+            score = score.toFixed(0);
+            document.getElementById("memoryTestResult").innerText = "Your memory score is: " + score + "%";
+        }
+
+        // Treatment Solutions Function
+        function showTreatment() {
+            const treatment = document.getElementById("treatment").value;
+            let treatmentAdvice = "";
+
+            switch (treatment) {
+                case "amnesia":
+                    treatmentAdvice = "Suggested treatment: Memory exercises, cognitive therapy.";
+                    break;
+                case "migraine":
+                    treatmentAdvice = "Suggested treatment: Pain relievers, relaxation techniques.";
+                    break;
+                case "sinusitis":
+                    treatmentAdvice = "Suggested treatment: Nasal decongestants, saline spray.";
+                    break;
+                case "nausea":
+                    treatmentAdvice = "Suggested treatment: Hydration, anti-nausea medication.";
+                    break;
+                case "chronicHeadache":
+                    treatmentAdvice = "Suggested treatment: Regular sleep, hydration, stress management.";
+                    break;
+                default:
+                    treatmentAdvice = "Please select a condition.";
+            }
+            document.getElementById("treatmentResult").innerText = treatmentAdvice;
+        }
+
+        // Diet Plan Function
+        function showDietPlan() {
+
+            const treatment = document.getElementById("treatment").value;
+            let dietPlan = "";
+            switch (treatment) {
+                case "amnesia":
+                    dietPlan = "leafy greens, fatty fish, whole grain, berries";
+                    break;
+                case "migraine":
+                    dietPlan = "omega-3 fatty acids, magnesium-rich foods, hydrating foods";
+                    break;
+                case "sinusitis":
+                   dietPlan = "vitamic-c rich food, garlic & onion, spicy food, ginger";
+                    break;
+                case "nausea":
+                    dietPlan = "banana, rice, plain-crackers, ginger";
+                    break;
+                case "chronicHeadache":
+                    dietPlan = "Magnesium-rich foods, complex carbohydrates, fruits& vegetables, omega-3 fatty acids";
+                    break;
+            }
+
+           
+            document.getElementById("dietPlanResult").innerText = dietPlan;
+        }
+
+        // Medication Reminder Function
+        function setMedicationReminder() {
+            const medication = document.getElementById("medication").value;
+            const medicationTime = document.getElementById("medicationTime").value;
+            document.getElementById("reminderResult").innerText = `Reminder: Take ${medication} at ${medicationTime}.`;
+        }
+    </script>
+
+</body>
+</html>
