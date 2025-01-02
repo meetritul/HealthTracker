@@ -1,210 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neurological Health Tracker</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-        }
-        header {
-            text-align: center;
-            padding: 20px;
-            background-color: #4CAF50;
-            color: white;
-        }
-        .section {
-            background-color: #fff;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-        input, select, button {
-            padding: 10px;
-            margin-bottom: 15px;
-            width: 100%;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Tracker Application</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; }
+    header { background-color: #4CAF50; color: white; padding: 20px; text-align: center; }
+    section { margin: 20px; padding: 20px; background-color: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+    button { padding: 10px 15px; margin-top: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #45a049; }
+    input, select { padding: 10px; margin: 10px 0; width: 100%; }
+    .diagnosis-result { margin-top: 20px; padding: 15px; background-color: #ffecb3; border: 1px solid #ffcc00; }
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>Neurological Health Tracker</h1>
-    </header>
+  <header>
+    <h1>Health Tracker Application</h1>
+    <p>Track your mood, sleep, memory, and get personalized treatment solutions</p>
+  </header>
 
-    <div class="container">
+  <!-- Mood and Sleep Tracker -->
+  <section>
+    <h2>Mood and Sleep Tracker</h2>
+    <form id="moodSleepForm">
+      <label for="mood">How is your mood today?</label>
+      <select id="mood" name="mood">
+        <option value="happy">Happy</option>
+        <option value="neutral">Neutral</option>
+        <option value="sad">Sad</option>
+        <option value="anxious">Anxious</option>
+      </select>
+      <br>
+      <label for="sleepHours">How many hours did you sleep last night?</label>
+      <input type="number" id="sleepHours" name="sleepHours" min="0" max="24" required>
+      <br>
+      <button type="button" onclick="trackMoodSleep()">Track Mood & Sleep</button>
+    </form>
+    <div id="moodSleepResult"></div>
+  </section>
 
-        <!-- Mood and Emotion Tracker -->
-        <div class="section">
-            <h2>Mood and Emotion Tracker</h2>
-            <label for="mood">How are you feeling today?</label>
-            <select id="mood">
-                <option value="happy">Happy</option>
-                <option value="sad">Sad</option>
-                <option value="angry">Angry</option>
-                <option value="anxious">Anxious</option>
-                <option value="neutral">Neutral</option>
-            </select>
-            <button onclick="trackMood()">Track Mood</button>
-            <p id="moodResult"></p>
-        </div>
+  <!-- Memory Test -->
+  <section>
+    <h2>Memory Test</h2>
+    <button onclick="startMemoryTest()">Start Memory Test</button>
+    <div id="memoryTestResult"></div>
+  </section>
 
-        <!-- Sleep Patterns -->
-        <div class="section">
-            <h2>Sleep Patterns</h2>
-            <label for="sleepDuration">How many hours did you sleep last night?</label>
-            <input type="number" id="sleepDuration" placeholder="Enter hours of sleep">
-            <button onclick="trackSleep()">Track Sleep</button>
-            <p id="sleepResult"></p>
-        </div>
+  <!-- Treatment Solutions -->
+  <section>
+    <h2>Treatment Solutions</h2>
+    <select id="condition" name="condition">
+      <option value="amnesia">Amnesia</option>
+      <option value="migraine">Migraine</option>
+      <option value="sinusitis">Sinusitis</option>
+      <option value="nausea">Nausea</option>
+      <option value="chronic_headache">Chronic Headache</option>
+    </select>
+    <button onclick="showTreatment()">Get Treatment</button>
+    <div id="treatmentSolution"></div>
+  </section>
 
-        <!-- Memory Test -->
-        <div class="section">
-            <h2>Memory Test</h2>
-            <button onclick="startMemoryTest()">Start Memory Test</button>
-            <p id="memoryTestResult"></p>
-        </div>
+  <!-- Diet Plans -->
+  <section>
+    <h2>Diet Plans</h2>
+    <button onclick="showDietPlans()">View Diet Plans</button>
+    <div id="dietPlans"></div>
+  </section>
 
-        <!-- Treatment Solutions -->
-        <div class="section">
-            <h2>Treatment Solutions</h2>
-            <label for="treatment">Select a condition:</label>
-            <select id="treatment">
-                <option value="amnesia">Amnesia</option>
-                <option value="migraine">Migraine</option>
-                <option value="sinusitis">Sinusitis</option>
-                <option value="nausea">Nausea</option>
-                <option value="chronicHeadache">Chronic Headache</option>
-            </select>
-            <button onclick="showTreatment()">Show Treatment</button>
-            <p id="treatmentResult"></p>
-        </div>
+  <!-- Medication Reminder -->
+  <section>
+    <h2>Medication Reminder</h2>
+    <form id="medicationForm">
+      <label for="medicationName">Medication Name:</label>
+      <input type="text" id="medicationName" name="medicationName">
+      <br>
+      <label for="medicationTime">Time to take:</label>
+      <input type="time" id="medicationTime" name="medicationTime">
+      <br>
+      <button type="button" onclick="setMedicationReminder()">Set Reminder</button>
+    </form>
+    <div id="medicationReminder"></div>
+  </section>
 
-        <!-- Diet Plans -->
-        <div class="section">
-            <h2>Diet Plans</h2>
-            <button onclick="showDietPlan()">Show Diet Plan</button>
-            <p id="dietPlanResult"></p>
-        </div>
+  <!-- Educational Content -->
+  <section>
+    <h2>Educational Content</h2>
+    <p>Learn about the conditions and treatments:</p>
+    <button onclick="showEducationalContent()">View Content</button>
+    <div id="educationalContent"></div>
+  </section>
 
-        <!-- Medication Reminder -->
-        <div class="section">
-            <h2>Medication Reminder</h2>
-            <label for="medication">Enter Medication Name:</label>
-            <input type="text" id="medication" placeholder="Medication Name">
-            <label for="medicationTime">Enter Time to Take:</label>
-            <input type="time" id="medicationTime">
-            <button onclick="setMedicationReminder()">Set Reminder</button>
-            <p id="reminderResult"></p>
-        </div>
+  <script>
+    function trackMoodSleep() {
+      const mood = document.getElementById("mood").value;
+      const sleepHours = document.getElementById("sleepHours").value;
+      let result = "Your mood today is: " + mood + ". ";
+      
+      if (sleepHours < 6) {
+        result += "You might need more sleep for better health.";
+      } else if (sleepHours >= 6 && sleepHours <= 8) {
+        result += "You're getting a healthy amount of sleep!";
+      } else {
+        result += "You might be oversleeping; try to balance it.";
+      }
+      
+      document.getElementById("moodSleepResult").innerText = result;
+    }
 
-    </div>
+    function startMemoryTest() {
+      // Simple memory test - just an example
+      const memoryTestQuestions = [
+        { question: "What is the capital of France?", answer: "Paris" },
+        { question: "What is 2 + 2?", answer: "4" },
+      ];
+      
+      let userAnswers = [];
+      memoryTestQuestions.forEach((q, index) => {
+        let userAnswer = prompt(q.question);
+        userAnswers.push(userAnswer.toLowerCase() === q.answer.toLowerCase());
+      });
+      
+      let score = userAnswers.filter(answer => answer === true).length;
+      document.getElementById("memoryTestResult").innerText = "Your score: " + score + " out of " + memoryTestQuestions.length;
+    }
 
-    <script>
-        // Mood Tracker Function
-        function trackMood() {
-            const mood = document.getElementById("mood").value;
-            document.getElementById("moodResult").innerText = "You are feeling " + mood + " today.";
-        }
+    function showTreatment() {
+      const condition = document.getElementById("condition").value;
+      let treatment = "";
 
-        // Sleep Tracker Function
-        function trackSleep() {
-            const sleepDuration = document.getElementById("sleepDuration").value;
-            document.getElementById("sleepResult").innerText = "You slept for " + sleepDuration + " hours last night.";
-        }
+      switch (condition) {
+        case "amnesia":
+          treatment = "Memory therapy, Cognitive exercises, Medication (if prescribed by doctor).";
+          break;
+        case "migraine":
+          treatment = "Pain relievers, Rest in a dark room, Hydration.";
+          break;
+        case "sinusitis":
+          treatment = "Decongestants, Nasal sprays, Steam inhalation.";
+          break;
+        case "nausea":
+          treatment = "Hydration, Ginger, Anti-nausea medications.";
+          break;
+        case "chronic_headache":
+          treatment = "Pain relievers, Relaxation techniques, Proper sleep.";
+          break;
+        default:
+          treatment = "Consult with a healthcare provider.";
+      }
 
-        // Memory Test Function
-        function startMemoryTest() {
-            let score = Math.random() * 100;
-            score = score.toFixed(0);
-            document.getElementById("memoryTestResult").innerText = "Your memory score is: " + score + "%";
-        }
+      document.getElementById("treatmentSolution").innerText = treatment;
+    }
 
-        // Treatment Solutions Function
-        function showTreatment() {
-            const treatment = document.getElementById("treatment").value;
-            let treatmentAdvice = "";
+    function showDietPlans() {
+      const plans = [
+        { condition: "Migraine", plan: "Avoid caffeine, eat smaller meals, drink plenty of water." },
+        { condition: "Sinusitis", plan: "Eat anti-inflammatory foods, drink herbal teas." },
+        { condition: "Amnesia", plan: "Include Omega-3 rich foods, memory-boosting snacks." },
+        { condition: "Chronic Headache", plan: "Include magnesium-rich foods, avoid processed foods." }
+      ];
+      
+      let plan = "";
+      plans.forEach(p => {
+        plan += "<p><b>" + p.condition + ":</b> " + p.plan + "</p>";
+      });
+      document.getElementById("dietPlans").innerHTML = plan;
+    }
 
-            switch (treatment) {
-                case "amnesia":
-                    treatmentAdvice = "Suggested treatment: Memory exercises, cognitive therapy.";
-                    break;
-                case "migraine":
-                    treatmentAdvice = "Suggested treatment: Pain relievers, relaxation techniques.";
-                    break;
-                case "sinusitis":
-                    treatmentAdvice = "Suggested treatment: Nasal decongestants, saline spray.";
-                    break;
-                case "nausea":
-                    treatmentAdvice = "Suggested treatment: Hydration, anti-nausea medication.";
-                    break;
-                case "chronicHeadache":
-                    treatmentAdvice = "Suggested treatment: Regular sleep, hydration, stress management.";
-                    break;
-                default:
-                    treatmentAdvice = "Please select a condition.";
-            }
-            document.getElementById("treatmentResult").innerText = treatmentAdvice;
-        }
+    function setMedicationReminder() {
+      const medicationName = document.getElementById("medicationName").value;
+      const medicationTime = document.getElementById("medicationTime").value;
+      const reminderText = "Reminder: Take " + medicationName + " at " + medicationTime;
+      document.getElementById("medicationReminder").innerText = reminderText;
+    }
 
-        // Diet Plan Function
-        function showDietPlan() {
-
-            const treatment = document.getElementById("treatment").value;
-            let dietPlan = "";
-            switch (treatment) {
-                case "amnesia":
-                    dietPlan = "leafy greens, fatty fish, whole grain, berries";
-                    break;
-                case "migraine":
-                    dietPlan = "omega-3 fatty acids, magnesium-rich foods, hydrating foods";
-                    break;
-                case "sinusitis":
-                   dietPlan = "vitamic-c rich food, garlic & onion, spicy food, ginger";
-                    break;
-                case "nausea":
-                    dietPlan = "banana, rice, plain-crackers, ginger";
-                    break;
-                case "chronicHeadache":
-                    dietPlan = "Magnesium-rich foods, complex carbohydrates, fruits& vegetables, omega-3 fatty acids";
-                    break;
-            }
-
-           
-            document.getElementById("dietPlanResult").innerText = dietPlan;
-        }
-
-        // Medication Reminder Function
-        function setMedicationReminder() {
-            const medication = document.getElementById("medication").value;
-            const medicationTime = document.getElementById("medicationTime").value;
-            document.getElementById("reminderResult").innerText = `Reminder: Take ${medication} at ${medicationTime}.`;
-        }
-    </script>
+    function showEducationalContent() {
+      const content = {
+        amnesia: "Amnesia involves memory loss. Treatment includes therapy and medication.",
+        migraine: "Migraines are intense headaches. Triggers may include stress and certain foods.",
+        sinusitis: "Sinusitis is an inflammation of the sinuses. It can be treated with decongestants.",
+        nausea: "Nausea can be caused by various factors. Stay hydrated and eat light meals.",
+        chronic_headache: "Chronic headaches can be managed with medication and lifestyle changes."
+      };
+      
+      let contentHTML = "";
+      for (const condition in content) {
+        contentHTML += "<h3>" + condition.charAt(0).toUpperCase() + condition.slice(1) + "</h3>";
+        contentHTML += "<p>" + content[condition] + "</p>";
+      }
+      
+      document.getElementById("educationalContent").innerHTML = contentHTML;
+    }
+  </script>
 
 </body>
 </html>
