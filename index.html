@@ -16,183 +16,334 @@
 </head>
 <body>
 
-  <header>
-    <h1>Health Tracker Application</h1>
-    <p>Track your mood, sleep, memory, and get personalized treatment solutions</p>
-  </header>
+    <header>
+        <h1>Health Tracker Application</h1>
+        <p>Track your mood, sleep, memory, and get personalized treatment solutions</p>
+    </header>
 
-  <!-- Mood and Sleep Tracker -->
-  <section>
-    <h2>Mood and Sleep Tracker</h2>
-    <form id="moodSleepForm">
-      <label for="mood">How is your mood today?</label>
-      <select id="mood" name="mood">
-        <option value="happy">Happy</option>
-        <option value="neutral">Neutral</option>
-        <option value="sad">Sad</option>
-        <option value="anxious">Anxious</option>
-      </select>
-      <br>
-      <label for="sleepHours">How many hours did you sleep last night?</label>
-      <input type="number" id="sleepHours" name="sleepHours" min="0" max="24" required>
-      <br>
-      <button type="button" onclick="trackMoodSleep()">Track Mood & Sleep</button>
-    </form>
-    <div id="moodSleepResult"></div>
-  </section>
+    <!-- Mood and Sleep Tracker -->
+    <section>
+        <h2>Mood and Sleep Tracker</h2>
+        <form id="moodSleepForm">
+            <label for="mood">How is your mood today?</label>
+            <select id="mood" name="mood">
+                <option value="happy">Happy</option>
+                <option value="neutral">Neutral</option>
+                <option value="sad">Sad</option>
+                <option value="anxious">Anxious</option>
+            </select>
+            <br>
+            <label for="sleepHours">How many hours did you sleep last night?</label>
+            <input type="number" id="sleepHours" name="sleepHours" min="0" max="24" required>
+            <br>
+            <button type="button" onclick="trackMoodSleep()">Track Mood & Sleep</button>
+        </form>
+        <div id="moodSleepResult"></div>
+    </section>
 
-  <!-- Memory Test -->
-  <section>
-    <h2>Memory Test</h2>
-    <button onclick="startMemoryTest()">Start Memory Test</button>
-    <div id="memoryTestResult"></div>
-  </section>
+    <!-- Memory Test -->
+    <section>
+        <h2>Memory Test</h2>
+        <!-- <button onclick="startMemoryTest()">Start Memory Test</button>-->
+        <!-- <button onclick="checkAnswers()">Start Memory Test</button>-->
+        <!--<div id="memoryTestResult"></div>-->
 
-  <!-- Treatment Solutions -->
-  <section>
-    <h2>Treatment Solutions</h2>
-    <select id="condition" name="condition">
-      <option value="amnesia">Amnesia</option>
-      <option value="migraine">Migraine</option>
-      <option value="sinusitis">Sinusitis</option>
-      <option value="nausea">Nausea</option>
-      <option value="chronic_headache">Chronic Headache</option>
-    </select>
-    <button onclick="showTreatment()">Get Treatment</button>
-    <div id="treatmentSolution"></div>
-  </section>
+        <div id="questions">
+            <!-- Question 1 -->
+            <div class="question" id="q1">
+                <p><strong>Question 1: Logical Reasoning</strong></p>
+                <p>What comes next in the sequence: 2, 4, 8, 16, ?</p>
+                <input type="number" id="answer1" placeholder="Your answer">
+            </div>
 
-  <!-- Diet Plans -->
-  <section>
-    <h2>Diet Plans</h2>
-    <button onclick="showDietPlans()">View Diet Plans</button>
-    <div id="dietPlans"></div>
-  </section>
+            <!-- Question 2 -->
+            <div class="question" id="q2">
+                <p><strong>Question 2: Analytical Thinking</strong></p>
+                <p>If you rearrange the letters 'T S I N A N T', what word do you get?</p>
+                <input type="text" id="answer2" placeholder="Your answer">
+            </div>
 
-  <!-- Medication Reminder -->
-  <section>
-    <h2>Medication Reminder</h2>
-    <form id="medicationForm">
-      <label for="medicationName">Medication Name:</label>
-      <input type="text" id="medicationName" name="medicationName">
-      <br>
-      <label for="medicationTime">Time to take:</label>
-      <input type="time" id="medicationTime" name="medicationTime">
-      <br>
-      <button type="button" onclick="setMedicationReminder()">Set Reminder</button>
-    </form>
-    <div id="medicationReminder"></div>
-  </section>
+            <!-- Question 3 -->
+            <div class="question" id="q3">
+                <p><strong>Question 3: Arithmetic</strong></p>
+                <p>What is 12 + 28?</p>
+                <input type="number" id="answer3" placeholder="Your answer">
+            </div>
 
-  <!-- Educational Content -->
-  <section>
-    <h2>Educational Content</h2>
-    <p>Learn about the conditions and treatments:</p>
-    <button onclick="showEducationalContent()">View Content</button>
-    <div id="educationalContent"></div>
-  </section>
+            <!-- Question 4 -->
+            <div class="question" id="q4">
+                <p><strong>Question 4: Logical Reasoning</strong></p>
+                <p>If all roses are flowers and some flowers fade quickly, can we say that some roses fade quickly?</p>
+                <input type="text" id="answer4" placeholder="Your answer (yes/no)">
+            </div>
 
-  <script>
-    function trackMoodSleep() {
-      const mood = document.getElementById("mood").value;
-      const sleepHours = document.getElementById("sleepHours").value;
-      let result = "Your mood today is: " + mood + ". ";
+            <!-- Question 5 -->
+            <div class="question" id="q5">
+                <p><strong>Question 5: Arithmetic</strong></p>
+                <p>What is 75 divided by 5?</p>
+                <input type="number" id="answer5" placeholder="Your answer">
+            </div>
+
+            <br>
+            <button onclick="checkAnswers()">Submit Answers</button>
+
+            <button onclick="showResultSummary()">View Summary</button>
+        </div>
+
+        <div id="result" class="result"></div>
       
-      if (sleepHours < 6) {
-        result += "You might need more sleep for better health.";
-      } else if (sleepHours >= 6 && sleepHours <= 8) {
-        result += "You're getting a healthy amount of sleep!";
-      } else {
-        result += "You might be oversleeping; try to balance it.";
-      }
-      
-      document.getElementById("moodSleepResult").innerText = result;
-    }
+        <div id="resultSummary" class="result"></div>
+    </section>
 
-    function startMemoryTest() {
-      // Simple memory test - just an example
-      const memoryTestQuestions = [
-        { question: "What is the capital of France?", answer: "Paris" },
-        { question: "What is 2 + 2?", answer: "4" },
-      ];
-      
-      let userAnswers = [];
-      memoryTestQuestions.forEach((q, index) => {
-        let userAnswer = prompt(q.question);
-        userAnswers.push(userAnswer.toLowerCase() === q.answer.toLowerCase());
-      });
-      
-      let score = userAnswers.filter(answer => answer === true).length;
-      document.getElementById("memoryTestResult").innerText = "Your score: " + score + " out of " + memoryTestQuestions.length;
-    }
+   
 
-    function showTreatment() {
-      const condition = document.getElementById("condition").value;
-      let treatment = "";
+    <!-- Treatment Solutions -->
+    <section>
+        <h2>Treatment Solutions</h2>
+        <select id="condition" name="condition">
+            <option value="amnesia">Amnesia</option>
+            <option value="migraine">Migraine</option>
+            <option value="sinusitis">Sinusitis</option>
+            <option value="nausea">Nausea</option>
+            <option value="chronic_headache">Chronic Headache</option>
+        </select>
+        <button onclick="showTreatment()">Get Treatment</button>
+        <div id="treatmentSolution"></div>
+    </section>
 
-      switch (condition) {
-        case "amnesia":
-          treatment = "Memory therapy, Cognitive exercises, Medication (if prescribed by doctor).";
-          break;
-        case "migraine":
-          treatment = "Pain relievers, Rest in a dark room, Hydration.";
-          break;
-        case "sinusitis":
-          treatment = "Decongestants, Nasal sprays, Steam inhalation.";
-          break;
-        case "nausea":
-          treatment = "Hydration, Ginger, Anti-nausea medications.";
-          break;
-        case "chronic_headache":
-          treatment = "Pain relievers, Relaxation techniques, Proper sleep.";
-          break;
-        default:
-          treatment = "Consult with a healthcare provider.";
-      }
+    <!-- Diet Plans -->
+    <section>
+        <h2>Diet Plans</h2>
+        <button onclick="showDietPlans()">View Diet Plans</button>
+        <div id="dietPlans"></div>
+    </section>
 
-      document.getElementById("treatmentSolution").innerText = treatment;
-    }
+    <!-- Medication Reminder -->
+    <section>
+        <h2>Medication Reminder</h2>
+        <form id="medicationForm">
+            <label for="medicationName">Medication Name:</label>
+            <input type="text" id="medicationName" name="medicationName">
+            <br>
+            <label for="medicationTime">Time to take:</label>
+            <input type="time" id="medicationTime" name="medicationTime">
+            <br>
+            <button type="button" onclick="setMedicationReminder()">Set Reminder</button>
+        </form>
+        <div id="medicationReminder"></div>
+    </section>
 
-    function showDietPlans() {
-      const plans = [
-        { condition: "Migraine", plan: "Avoid caffeine, eat smaller meals, drink plenty of water." },
-        { condition: "Sinusitis", plan: "Eat anti-inflammatory foods, drink herbal teas." },
-        { condition: "Amnesia", plan: "Include Omega-3 rich foods, memory-boosting snacks." },
-        { condition: "Chronic Headache", plan: "Include magnesium-rich foods, avoid processed foods." }
-      ];
-      
-      let plan = "";
-      plans.forEach(p => {
-        plan += "<p><b>" + p.condition + ":</b> " + p.plan + "</p>";
-      });
-      document.getElementById("dietPlans").innerHTML = plan;
-    }
+    <!-- Educational Content -->
+    <section>
+        <h2>Educational Content</h2>
+        <p>Learn about the conditions and treatments:</p>
+        <button onclick="showEducationalContent()">View Content</button>
+        <div id="educationalContent"></div>
+    </section>
 
-    function setMedicationReminder() {
-      const medicationName = document.getElementById("medicationName").value;
-      const medicationTime = document.getElementById("medicationTime").value;
-      const reminderText = "Reminder: Take " + medicationName + " at " + medicationTime;
-      document.getElementById("medicationReminder").innerText = reminderText;
-    }
+    <script>
+        function trackMoodSleep() {
+            const mood = document.getElementById("mood").value;
+            const sleepHours = document.getElementById("sleepHours").value;
 
-    function showEducationalContent() {
-      const content = {
-        amnesia: "Amnesia involves memory loss. Treatment includes therapy and medication.",
-        migraine: "Migraines are intense headaches. Triggers may include stress and certain foods.",
-        sinusitis: "Sinusitis is an inflammation of the sinuses. It can be treated with decongestants.",
-        nausea: "Nausea can be caused by various factors. Stay hydrated and eat light meals.",
-        chronic_headache: "Chronic headaches can be managed with medication and lifestyle changes."
-      };
-      
-      let contentHTML = "";
-      for (const condition in content) {
-        contentHTML += "<h3>" + condition.charAt(0).toUpperCase() + condition.slice(1) + "</h3>";
-        contentHTML += "<p>" + content[condition] + "</p>";
-      }
-      
-      document.getElementById("educationalContent").innerHTML = contentHTML;
-    }
-  </script>
+            let result = "Your mood today is: " + mood + ". ";
+
+            if (sleepHours < 6) {
+                result += "You might need more sleep for better health.";
+            } else if (sleepHours >= 6 && sleepHours <= 8) {
+                result += "You're getting a healthy amount of sleep!";
+            } else {
+                result += "You might be oversleeping; try to balance it.";
+            }
+
+            document.getElementById("moodSleepResult").innerText = result;
+        }
+
+        //function startMemoryTest() {
+        //  // Simple memory test - just an example
+        //  //const memoryTestQuestions = [
+        //  //  { question: "What is the capital of France?", answer: "Paris" },
+        //  //  { question: "What is 2 + 2?", answer: "4" },
+        //  //];
+
+        //  //let userAnswers = [];
+        //  //memoryTestQuestions.forEach((q, index) => {
+        //  //  let userAnswer = prompt(q.question);
+        //  //  userAnswers.push(userAnswer.toLowerCase() === q.answer.toLowerCase());
+        //  //});
+
+        //  //let score = userAnswers.filter(answer => answer === true).length;
+        //    //document.getElementById("memoryTestResult").innerText = "Your score: " + score + " out of " + memoryTestQuestions.length;
+
+
+
+        //}
+        function checkAnswers() {
+            let score = 0;
+            let resultMessage = "";
+            var correct = "";
+            // Question 1: Logical reasoning
+            let answer1 = document.getElementById("answer1").value;
+            if (answer1 == 32) {
+                score++;
+
+            }
+            else if (answer1 != 32) {
+
+                alert('Correct answer for Question 1 is' + " " + 32);
+            }
+
+            // Question 2: Analytical thinking
+            let answer2 = document.getElementById("answer2").value.toLowerCase();
+            if (answer2 === "instant") {
+                score++;
+            }
+            else {
+                correct = "instant";
+                alert('Correct answer for Question 2 is' + " " + correct);
+            }
+
+            // Question 3: Arithmetic
+            let answer3 = document.getElementById("answer3").value;
+            if (answer3 == 40) {
+                score++;
+
+            }
+            else {
+                correct = 40;
+                alert('Correct answer for Question 3 is' + " " + correct);
+            }
+
+            // Question 4: Logical reasoning
+            let answer4 = document.getElementById("answer4").value.toLowerCase();
+            if (answer4 === "yes") {
+                score++;
+
+            }
+            else {
+                correct = "yes";
+                alert('Correct answer for Question 4 is' + " " + correct);
+            }
+
+            // Question 5: Arithmetic
+            let answer5 = document.getElementById("answer5").value;
+            if (answer5 == 15) {
+                score++;
+
+            }
+            else {
+                correct = 15;
+                alert('Correct answer for Question 5 is' + " " + correct);
+            }
+
+            // Display result
+            if (score == 5) {
+                resultMessage = "Excellent! You got all the answers right!";
+            } else if (score >= 3) {
+                resultMessage = "Good job! You passed the test.";
+            } else {
+                resultMessage = "Try again! You can improve your memory skills.";
+            }
+
+            document.getElementById("result").innerHTML = `Your total score is: ${score}/5<br>${resultMessage}`;
+        }
+
+        function showTreatment() {
+            const condition = document.getElementById("condition").value;
+            let treatment = "";
+
+            switch (condition) {
+                case "amnesia":
+                    treatment = "Memory therapy, Cognitive exercises, Medication (if prescribed by doctor).";
+                    break;
+                case "migraine":
+                    treatment = "Pain relievers, Rest in a dark room, Hydration.";
+                    break;
+                case "sinusitis":
+                    treatment = "Decongestants, Nasal sprays, Steam inhalation.";
+                    break;
+                case "nausea":
+                    treatment = "Hydration, Ginger, Anti-nausea medications.";
+                    break;
+                case "chronic_headache":
+                    treatment = "Pain relievers, Relaxation techniques, Proper sleep.";
+                    break;
+                case "agnosia":
+                    treatment = "CT scanning and brain MRI, therapies as per prescribed by physician.";
+                    break;
+                case "dyscalculia":
+                    treatment = "Medication prescribed by the physician, psychotherapy.";
+                default:
+                    treatment = "Consult with a healthcare provider.";
+            }
+
+            document.getElementById("treatmentSolution").innerText = treatment;
+        }
+
+        function showDietPlans() {
+            const plans = [
+                { condition: "Migraine", plan: "Avoid caffeine, eat smaller meals, drink plenty of water." },
+                { condition: "Sinusitis", plan: "Eat anti-inflammatory foods, drink herbal teas." },
+                { condition: "Amnesia", plan: "Include Omega-3 rich foods, memory-boosting snacks." },
+                { condition: "Chronic Headache", plan: "Include magnesium-rich foods, avoid processed foods." }
+            ];
+
+            let plan = "";
+            plans.forEach(p => {
+                plan += "<p><b>" + p.condition + ":</b> " + p.plan + "</p>";
+            });
+            document.getElementById("dietPlans").innerHTML = plan;
+        }
+
+        function setMedicationReminder() {
+            const medicationName = document.getElementById("medicationName").value;
+            const medicationTime = document.getElementById("medicationTime").value;
+            const reminderText = "Reminder: Take " + medicationName + " at " + medicationTime;
+            document.getElementById("medicationReminder").innerText = reminderText;
+        }
+        function showResultSummary() {
+            
+
+            const content = {
+                logicalreasoning: "If you get the incorrect answers then you might have a chance of having thought disorders ",
+                analyticalthinking: "If you get the incorrect answers then you might have a chance of having agnosia",
+                arithmetic: "If you get the incorrect answers then you might have a chance of having dyscalculia"
+
+            };
+
+            let contentHTML = "";
+            for (const condition in content) {
+                contentHTML += "<h3>" + condition.charAt(0).toUpperCase() + condition.slice(1) + "</h3>";
+                contentHTML += "<p>" + content[condition] + "</p>";
+            }
+            
+            
+            alert("Logical Reasoning: If you get the incorrect answers then you might have a chance of having thought disorders\nAnalytical Thinking: If you get the incorrect answers then you might have a chance of having agnosia\nArithmetic: If you get the incorrect answers then you might have a chance of having dyscalculia");
+
+            //document.getElementById("resultsummary").innerHTML = contentHTML;
+        }
+        function showEducationalContent() {
+            const content = {
+                amnesia: "Amnesia involves memory loss. Treatment includes therapy and medication.",
+                migraine: "Migraines are intense headaches. Triggers may include stress and certain foods.",
+                sinusitis: "Sinusitis is an inflammation of the sinuses. It can be treated with decongestants.",
+                nausea: "Nausea can be caused by various factors. Stay hydrated and eat light meals.",
+                chronic_headache: "Chronic headaches can be managed with medication and lifestyle changes.",
+                dyscalculia: "It occurs when a person has issues while solving simple arithmetic opreations.",
+                agnosia: "It occurs when a person knows, but can't identify through visual or auditory methhods."
+            };
+
+            let contentHTML = "";
+            for (const condition in content) {
+                contentHTML += "<h3>" + condition.charAt(0).toUpperCase() + condition.slice(1) + "</h3>";
+                contentHTML += "<p>" + content[condition] + "</p>";
+            }
+
+            document.getElementById("educationalContent").innerHTML = contentHTML;
+        }
+
+
+    </script>
 
 </body>
 </html>
